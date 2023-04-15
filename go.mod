@@ -1,4 +1,4 @@
-module github.com/MickStanciu/go-fn/v1
+module github.com/MickStanciu/go-fn
 
 go 1.20
 
