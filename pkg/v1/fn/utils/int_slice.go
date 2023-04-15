@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/MickStanciu/go-fn/v1/fn"
+	"github.com/MickStanciu/go-fn/pkg/v1/fn"
 )
 
 type IntSlice []int
