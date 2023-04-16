@@ -8,3 +8,8 @@ func GetOrElse(a, b string) string {
 		return len(s) > 0
 	})
 }
+
+// SliceContains - returns true if `n` is in the collection `col`
+func SliceContains(col []string, n string) bool {
+	return StringSlice(col).Contains(n)
+}
