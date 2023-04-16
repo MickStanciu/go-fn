@@ -1,4 +1,4 @@
-package utils
+package ints
 
 import (
 	"github.com/MickStanciu/go-fn/pkg/v1/fn"
@@ -16,4 +16,10 @@ func (i IntSlice) Filter(f func(i int) bool) IntSlice {
 
 func (i IntSlice) Sum() int {
 	return fn.Sum(i)
+}
+
+func (i IntSlice) Contains(n int) bool {
+	return fn.Any(i, func(elem int) bool {
+		return elem == n
+	})
 }

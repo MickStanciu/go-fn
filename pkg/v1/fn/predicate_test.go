@@ -1,8 +1,9 @@
 package fn_test
 
 import (
-	"github.com/MickStanciu/go-fn/pkg/v1/fn"
 	"testing"
+
+	"github.com/MickStanciu/go-fn/pkg/v1/fn"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -23,4 +24,14 @@ func TestGetOrElse_StringEmpty(t *testing.T) {
 		return len(a) > 0
 	})
 	assert.EqualValues(t, b, res)
+}
+
+func TestAny(t *testing.T) {
+	sample := []string{"A", "B", "C"}
+	assert.True(t, fn.Any[string](sample, func(s string) bool {
+		return s == "A"
+	}))
+	assert.False(t, fn.Any[string](sample, func(s string) bool {
+		return s == "Z"
+	}))
 }
