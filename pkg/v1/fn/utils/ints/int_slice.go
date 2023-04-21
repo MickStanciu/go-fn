@@ -7,7 +7,7 @@ import (
 type IntSlice []int
 
 // Map - returns a new slice where every element has been transformed by the map function
-func (i IntSlice) Map(f fn.MapFn[int]) IntSlice {
+func (i IntSlice) Map(f fn.MapFn[int, int]) IntSlice {
 	return fn.Map(i, f)
 }
 
