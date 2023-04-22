@@ -23,11 +23,6 @@ func Map[A, B any](input []A, fn MapFn[A, B]) []B {
 	return output
 }
 
-// MapSingle - applies a transformation function A -> B to element A
-func MapSingle[A, B any](input A, fn MapFn[A, B]) B {
-	return fn(input)
-}
-
 // FlatMap - applies a transformation function from T to []T
 func FlatMap[T any](input []T, fn FlatMapFn[T]) []T {
 	var output []T
