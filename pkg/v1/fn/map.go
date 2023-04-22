@@ -1,6 +1,7 @@
 package fn
 
-type MapFn[T any] func(T) T
+// MapFn - map function
+type MapFn[A, B any] func(A) B
 type FlatMapFn[T any] func(T) []T
 type FMapFn[A, B any] func(A) B
 
@@ -13,9 +14,9 @@ func Fmap[A, B any](a []A, fn FMapFn[A, B]) []B {
 	return b
 }
 
-// Map - applies a transformation function T -> T to each element of type T
-func Map[T any](input []T, fn MapFn[T]) []T {
-	output := make([]T, len(input))
+// Map - applies a transformation function A -> B to each element of type A
+func Map[A, B any](input []A, fn MapFn[A, B]) []B {
+	output := make([]B, len(input))
 	for i, element := range input {
 		output[i] = fn(element)
 	}
