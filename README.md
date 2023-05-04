@@ -101,5 +101,18 @@ fn.Fmap(a, func(a string) string {
 })
 ```
 
+#### FlatMap
+applies a transformation function from T to []T to each element of type T
+```go
+a := []int{1, 2, 3}
+result := fn.FlatMap(a, func(i int) []int {
+    var out []int
+    for j := 0; j < i; j++ {
+        out = append(out, j)
+    }
+    return out
+})
+```
+
 
 
