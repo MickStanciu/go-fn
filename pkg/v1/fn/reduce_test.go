@@ -1,8 +1,9 @@
 package fn_test
 
 import (
-	"github.com/MickStanciu/go-fn/pkg/v1/fn"
 	"testing"
+
+	"github.com/MickStanciu/go-fn/pkg/v1/fn"
 
 	"github.com/stretchr/testify/assert"
 )

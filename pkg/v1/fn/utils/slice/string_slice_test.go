@@ -1,9 +1,10 @@
 package slice_test
 
 import (
+	"testing"
+
 	"github.com/MickStanciu/go-fn/pkg/v1/fn/utils/slice"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestContains(t *testing.T) {
