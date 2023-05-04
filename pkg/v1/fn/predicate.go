@@ -48,10 +48,6 @@ func GetOrElse[T any](input T, other T, p Predicate[T]) T {
 // by removing the right-most elements which satisfy the predicate
 func FilterRight[T any](input []T, p Predicate[T]) []T {
 	ln := len(input)
-	if ln == 0 {
-		return input
-	}
-
 	found := 0
 	for i := ln - 1; i >= 0; i-- {
 		if !p(input[i]) {
