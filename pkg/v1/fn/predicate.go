@@ -28,6 +28,10 @@ func Any[T any](input []T, p Predicate[T]) bool {
 
 // All - returns true if all elements are satisfying the predicate function
 func All[T any](input []T, p Predicate[T]) bool {
+	if len(input) == 0 {
+		return false
+	}
+
 	for _, element := range input {
 		if !p(element) {
 			return false
@@ -45,7 +49,7 @@ func GetOrElse[T any](input T, other T, p Predicate[T]) T {
 }
 
 // FilterRight - filters a collection of type T, using a predicate function,
-// by removing the right-most elements which satisfy the predicate
+// by removing the right-most elements which satisfy the predicate, while preserving the order
 func FilterRight[T any](input []T, p Predicate[T]) []T {
 	ln := len(input)
 	found := 0
