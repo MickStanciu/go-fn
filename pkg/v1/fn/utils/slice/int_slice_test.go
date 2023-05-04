@@ -1,8 +1,9 @@
 package slice_test
 
 import (
-	"github.com/MickStanciu/go-fn/pkg/v1/fn/utils/slice"
 	"testing"
+
+	"github.com/MickStanciu/go-fn/pkg/v1/fn/utils/slice"
 
 	"github.com/stretchr/testify/assert"
 )

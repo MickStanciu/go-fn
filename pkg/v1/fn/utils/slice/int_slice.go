@@ -9,7 +9,7 @@ type IntSlice struct {
 }
 
 // Build - construct a StringSlice with values
-func (s IntSlice) Build(input []int) IntSlice {
+func (i IntSlice) Build(input []int) IntSlice {
 	return IntSlice{input}
 }
 
