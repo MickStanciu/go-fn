@@ -8,22 +8,31 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetOrElse_StringNotEmpty(t *testing.T) {
-	a := "test"
-	b := "other"
-	res := fn.GetOrElse(a, b, func(s string) bool {
-		return len(a) > 0
-	})
-	assert.EqualValues(t, a, res)
-}
+func TestGetOrElse(t *testing.T) {
+	tests := map[string]struct {
+		a              int
+		b              int
+		expectedOutput int
+	}{
+		"when matches": {
+			a: 10, b: 20,
+			expectedOutput: 10,
+		},
+		"when not matches": {
+			a: 16, b: 20,
+			expectedOutput: 20,
+		},
+	}
 
-func TestGetOrElse_StringEmpty(t *testing.T) {
-	a := ""
-	b := "other"
-	res := fn.GetOrElse(a, b, func(s string) bool {
-		return len(a) > 0
-	})
-	assert.EqualValues(t, b, res)
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			result := fn.GetOrElse(test.a, test.b, func(i int) bool {
+				return i < 15
+			})
+			assert.Equal(t, test.expectedOutput, result)
+
+		})
+	}
 }
 
 func TestAny(t *testing.T) {
@@ -77,6 +86,36 @@ func TestFilterRight(t *testing.T) {
 				return s == "X"
 			})
 			assert.EqualValues(t, test.expectedOutput, result)
+		})
+	}
+}
+
+func TestAll(t *testing.T) {
+	tests := map[string]struct {
+		input          []int
+		expectedOutput bool
+	}{
+		"when empty": {
+			input:          []int{},
+			expectedOutput: false,
+		},
+		"when all": {
+			input:          []int{3, 3, 3},
+			expectedOutput: true,
+		},
+		"when not all": {
+			input:          []int{3, 1, 3},
+			expectedOutput: false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			result := fn.All(test.input, func(i int) bool {
+				return i == 3
+			})
+			assert.Equal(t, test.expectedOutput, result)
+
 		})
 	}
 }
