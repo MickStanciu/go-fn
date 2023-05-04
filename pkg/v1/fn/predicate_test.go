@@ -36,6 +36,14 @@ func TestAny(t *testing.T) {
 	}))
 }
 
+func TestFilter(t *testing.T) {
+	input := []int{1, 2, 3, 4, 5, 6, 7, 8}
+	evens := fn.Filter(input, func(i int) bool {
+		return i%2 == 0
+	})
+	assert.EqualValues(t, []int{2, 4, 6, 8}, evens)
+}
+
 func TestFilterRight(t *testing.T) {
 	tests := map[string]struct {
 		input          []string
