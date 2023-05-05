@@ -21,8 +21,7 @@ func Filter[T any](input []T, p Predicate[T]) []T
 
 Example:
 ```go
-input := []int{1, 2, 3, 4, 5, 6, 7, 8}
-evens := fn.Filter(input, func(i int) bool {
+evens := fn.Filter([]int{1, 2, 3, 4, 5, 6, 7, 8}, func(i int) bool {
     return i%2 == 0
 })
 ```
@@ -35,8 +34,7 @@ func Any[T any](input []T, p Predicate[T]) bool
 
 Example:
 ```go
-sample := []string{"A", "B", "C"}
-result := fn.Any[string](sample, func(s string) bool {
+result := fn.Any[string]([]string{"A", "B", "C"}, func(s string) bool {
     return s == "A"
 })
 ```
@@ -49,8 +47,7 @@ func All[T any](input []T, p Predicate[T]) bool
 
 Example:
 ```go
-sample := []string{"A", "A", "A"}
-result := fn.All[string](sample, func(s string) bool {
+result := fn.All[string]([]string{"A", "A", "A"}, func(s string) bool {
     return s == "A"
 })
 ```
@@ -68,17 +65,31 @@ res := fn.GetOrElse(10, 20, func(i int) bool {
 })
 ```
 
-#### FilterRight
+#### DropWhileRight
 filters a collection of type T, using a predicate function, by removing the right-most elements which satisfy the predicate, while preserving the order
 
 ```go
-func FilterRight[T any](input []T, p Predicate[T]) []T
+func DropWhileRight[T any](input []T, p Predicate[T]) []T
 ```
 
 Example: 
 ```go
-result := fn.FilterRight([]string{"A", "B", "C"}, func(s string) bool {
+result := fn.DropWhileRight([]string{"A", "B", "C"}, func(s string) bool {
     return s == "C"
+})
+```
+
+#### TakeAll
+filters a collection of type T, using a predicate function, returning the elements which satisfy the predicate
+
+```go
+func TakeAll[T any](input []T, p Predicate[T]) []T
+```
+
+Example:
+```go
+result := fn.TakeAll([]string{"A","B","C","D","E"}, func(s string) bool {
+    return strings.HasPrefix(s, "D")
 })
 ```
 
@@ -95,8 +106,7 @@ func Map[A, B any](input []A, fn MapFn[A, B]) []B
 ```
 
 ```go
-a := []string{"George", "Maria", "John"}
-fn.Fmap(a, func(a string) string {
+fn.Fmap([]string{"George", "Maria", "John"}, func(a string) string {
     return "Hello " + a 
 })
 ```
@@ -104,8 +114,7 @@ fn.Fmap(a, func(a string) string {
 #### FlatMap
 applies a transformation function from T to []T to each element of type T
 ```go
-a := []int{1, 2, 3}
-result := fn.FlatMap(a, func(i int) []int {
+result := fn.FlatMap([]int{1, 2, 3}, func(i int) []int {
     var out []int
     for j := 0; j < i; j++ {
         out = append(out, j)
@@ -113,6 +122,20 @@ result := fn.FlatMap(a, func(i int) []int {
     return out
 })
 ```
+
+#### Reduce
+will fold a collection
+```go
+func Reduce[T any](input []T, fn ReduceFn[T]) T
+```
+
+Example:
+```go
+fn.Reduce([]int{1, 2, 3}, func(a, b int) int {
+    return a + b + 1
+})
+```
+result is `7`
 
 
 
