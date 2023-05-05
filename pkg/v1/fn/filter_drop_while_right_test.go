@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFilterRight(t *testing.T) {
+func TestDropWhileRight(t *testing.T) {
 	tests := map[string]struct {
 		input          []string
 		expectedOutput []string
@@ -36,7 +36,7 @@ func TestFilterRight(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			result := fn.FilterRight(test.input, func(s string) bool {
+			result := fn.DropWhileRight(test.input, func(s string) bool {
 				return s == "X"
 			})
 			assert.EqualValues(t, test.expectedOutput, result)
