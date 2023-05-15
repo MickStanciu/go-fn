@@ -138,4 +138,17 @@ fn.Reduce([]int{1, 2, 3}, func(a, b int) int {
 result is `7`
 
 
+#### Zip
+will combine 2 collections
+```go
+func Zip[A, B, C any](a []A, b []B, fn func(A, B) C) []C
+```
 
+Example:
+```go
+x := []string{"a", "b", "c"}
+y := []int{1, 2, 3}
+fn.Zip(x, y, func(a string, b int) string {
+    return fmt.Sprintf("%s-%d", a, b)
+}
+```
