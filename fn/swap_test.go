@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/MickStanciu/go-fn/pkg/v1/fn"
+	"github.com/MickStanciu/go-fn/fn"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,35 +1,36 @@
 package fn_test
 
 import (
+	"strings"
 	"testing"
 
-	"github.com/MickStanciu/go-fn/pkg/v1/fn"
+	"github.com/MickStanciu/go-fn/fn"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestAny(t *testing.T) {
+func TestTakeAll(t *testing.T) {
 	tests := map[string]struct {
 		input          []string
-		expectedOutput bool
+		expectedOutput []string
 	}{
 		"when empty": {
 			input:          []string{},
-			expectedOutput: false,
+			expectedOutput: nil,
 		},
 		"when no match": {
 			input:          []string{"A", "B", "C"},
-			expectedOutput: false,
+			expectedOutput: nil,
 		},
 		"when match": {
-			input:          []string{"A", "B", "C", "D"},
-			expectedOutput: true,
+			input:          []string{"A", "B", "C", "D", "DEF"},
+			expectedOutput: []string{"D", "DEF"},
 		},
 	}
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			result := fn.Any(test.input, func(s string) bool {
-				return s == "D"
+			result := fn.TakeAll(test.input, func(s string) bool {
+				return strings.HasPrefix(s, "D")
 			})
 			assert.Equal(t, test.expectedOutput, result)
 		})
