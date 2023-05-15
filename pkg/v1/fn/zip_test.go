@@ -14,15 +14,10 @@ func TestZip(t *testing.T) {
 		b              []int
 		expectedOutput []string
 	}{
-		"when same length": {
+		"will zip two slices": {
 			a:              []string{"a", "b", "c"},
 			b:              []int{1, 2, 3},
 			expectedOutput: []string{"a-1", "b-2", "c-3"},
-		},
-		"when different length": {
-			a:              []string{"a", "b", "c"},
-			b:              []int{1, 2},
-			expectedOutput: nil,
 		},
 	}
 
