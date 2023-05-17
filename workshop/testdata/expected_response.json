@@ -1,0 +1,69 @@
+[
+  {
+    "name": "Plectranthus",
+    "price": 5.99,
+    "photo": "mona_lavender.jpg"
+  },
+  {
+    "name": "Brassica Oleracea",
+    "price": 4.99
+  },
+  {
+    "name": "Viola Penny Orange Jump Up",
+    "price": 4.99
+  },
+  {
+    "name": "Cotula",
+    "price": 5.99,
+    "photo": "pincushion.jpg"
+  },
+  {
+    "name": "Pelargonium Peltatum",
+    "price": 4.99
+  },
+  {
+    "name": "Pansy Blue Shades",
+    "price": 3.99,
+    "photo": "pansy_blue_shades.jpg"
+  },
+  {
+    "name": "Pansy Yellow with Blotch",
+    "price": 3.99,
+    "photo": "yellow_pansy.jpg"
+  },
+  {
+    "name": "Dianthus",
+    "price": 5.99,
+    "photo": "dianthus.jpg"
+  },
+  {
+    "name": "Chrysanthemum",
+    "price": 9.99,
+    "photo": "bronze_mums.jpg"
+  },
+  {
+    "name": "Armeria Alliacea",
+    "price": 7.99,
+    "photo": "armeria_allicaea.jpg"
+  },
+  {
+    "name": "Salvia Splendens",
+    "price": 6.99,
+    "photo": "salvia.jpg"
+  },
+  {
+    "name": "Agapanthus",
+    "price": 8.99,
+    "photo": "agapanthus.jpg"
+  },
+  {
+    "name": "Iris Sibirica",
+    "price": 5.99,
+    "photo": "iris_siberica.jpg"
+  },
+  {
+    "name": "Chrysanthemum",
+    "price": 9.99,
+    "photo": "white_wedding.jpg"
+  }
+]
