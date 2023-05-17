@@ -20,17 +20,16 @@ func TestGetAllFlowersR(t *testing.T) {
 	assert.Len(t, r, 34)
 }
 
-//func TestQueryAPI(t *testing.T) {
-//	tfn := func(from, to int) []string {
-//		fmt.Println(from, to)
-//		if to == 5 {
-//			return []string{"a", "b", "c", "d", "e"}
-//		}
-//		return nil
-//	}
-//	r := workshop.QueryAPI(5, tfn)
-//	require.Len(t, r, 5)
-//}
+func TestQueryAPI(t *testing.T) {
+	tfn := func(from, to int) []string {
+		if to == 5 {
+			return []string{"a", "b", "c", "d", "e"}
+		}
+		return nil
+	}
+	r := workshop.QueryAPI(5, tfn)
+	require.Len(t, r, 5)
+}
 
 func TestGetTheCheapFlowers(t *testing.T) {
 	r := workshop.GetTheCheapFlowers()

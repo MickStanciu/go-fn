@@ -21,7 +21,7 @@ func GetAllFlowers() []models.Flower {
 }
 
 func GetAllFlowersR() []models.Flower {
-	panic("not implemented")
+	return QueryAPI(5, api.GetFlowers)
 }
 
 func GetTheCheapFlowers() []models.Flower {
@@ -38,7 +38,9 @@ func GetTheCheapFlowers() []models.Flower {
 }
 
 func GetTheCheapFlowersR() []models.Flower {
-	panic("not implemented")
+	return Filter(GetAllFlowersR(), func(f models.Flower) bool {
+		return f.Price < 10
+	})
 }
 
 func ConvertCheapFlowers() []models.FlowerResponse {
@@ -62,5 +64,52 @@ func ConvertCheapFlowers() []models.FlowerResponse {
 }
 
 func ConvertCheapFlowersR() []models.FlowerResponse {
-	panic("not implemented")
+	return Map(GetTheCheapFlowersR(), func(f models.Flower) models.FlowerResponse {
+		return models.FlowerResponse{
+			Name:  f.Name,
+			Price: f.Price,
+			Photo: GetOrElse(&f.Photo, nil, func(p *string) bool {
+				return *p != ""
+			}),
+		}
+	})
+}
+
+func Filter[T any](items []T, predicate func(T) bool) []T {
+	var result = make([]T, 0)
+	for _, i := range items {
+		if predicate(i) {
+			result = append(result, i)
+		}
+	}
+	return result
+}
+
+func Map[A, B any](items []A, mapper func(A) B) []B {
+	var result = make([]B, len(items), len(items))
+	for i, item := range items {
+		result[i] = mapper(item)
+	}
+	return result
+}
+
+func GetOrElse[T any](item T, orElse T, fn func(T) bool) T {
+	if fn(item) {
+		return item
+	}
+	return orElse
+}
+
+func QueryAPI[T any](batchSize int, procFn func(from, to int) []T) []T {
+	var result = make([]T, 0)
+
+	for {
+		f := procFn(len(result), len(result)+batchSize)
+		if len(f) == 0 {
+			break
+		}
+		result = append(result, f...)
+	}
+
+	return result
 }
