@@ -152,3 +152,37 @@ fn.Zip(x, y, func(a string, b int) string {
     return fmt.Sprintf("%s-%d", a, b)
 }
 ```
+
+#### SplitSliceInBatch
+will split a slice into batches and then will call the callback function for each batch.
+```go
+SplitSliceInBatch[T any](size int, collection []T, fn func(batch []T) error) error
+```
+
+Example:
+```go
+err := batch.SplitSliceInBatch(2, []string{"a", "b", "c", "d", "e", "f"},
+    func(strings []string) error {
+        if strings[0] == "d" {
+            return fmt.Errorf("error in processing function")
+        }
+        return nil
+    })
+```
+
+#### ParallelExecByKey
+will batch execute a given function, where items are identified by a key
+```go
+func ParallelExecByKey[R any, Key string](ctx context.Context, batchSize int, keys []Key, fn func(ctx context.Context, key Key) (R, error)) (map[Key]R, error)
+```
+
+Example:
+```go
+res, err := batch.ParallelExecByKey(
+		ctx, 2,
+		[]string{"item_1", "item_2", "item_3", "item_4", "item_5", "item_6"},
+		func(ctx context.Context, auditID string) (string, error) {
+			return fmt.Sprintf("%s_", itemID), nil
+		},
+	)
+```
