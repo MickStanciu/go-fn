@@ -181,7 +181,7 @@ Example:
 res, err := batch.ParallelExecByKey(
 		ctx, 2,
 		[]string{"item_1", "item_2", "item_3", "item_4", "item_5", "item_6"},
-		func(ctx context.Context, auditID string) (string, error) {
+		func(ctx context.Context, itemID string) (string, error) {
 			return fmt.Sprintf("%s_", itemID), nil
 		},
 	)
