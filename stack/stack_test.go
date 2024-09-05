@@ -8,13 +8,13 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	s := stack.New[string]()
+	s := stack.NewStack[string]()
 	require.NotNil(t, s)
 	assert.Equal(t, 0, s.GetLength())
 }
 
 func TestPush(t *testing.T) {
-	s := stack.New[string]()
+	s := stack.NewStack[string]()
 	require.NotNil(t, s)
 	assert.Equal(t, 0, s.GetLength())
 
@@ -24,7 +24,7 @@ func TestPush(t *testing.T) {
 }
 
 func TestPop(t *testing.T) {
-	s := stack.New[string]()
+	s := stack.NewStack[string]()
 	require.NotNil(t, s)
 
 	s.Push("hello")

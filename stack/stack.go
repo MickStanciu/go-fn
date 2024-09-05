@@ -6,8 +6,8 @@ type Stack[T any] struct {
 	content []T
 }
 
-// New - creates a new empty stack
-func New[T any]() *Stack[T] {
+// NewStack - creates a new empty stack
+func NewStack[T any]() *Stack[T] {
 	return &Stack[T]{}
 }
 
