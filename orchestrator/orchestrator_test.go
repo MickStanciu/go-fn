@@ -1,15 +1,15 @@
-package stack_test
+package orchestrator_test
 
 import (
 	"fmt"
-	"github.com/MickStanciu/go-fn/stack"
+	"github.com/MickStanciu/go-fn/orchestrator"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
 
 func TestOrchestrator_StartExecution_ShouldExecuteTheStepsWithoutRollback(t *testing.T) {
-	o := stack.NewOrchestrator()
+	o := orchestrator.NewOrchestrator()
 
 	step1 := func() error {
 		fmt.Println("executing step 1")
@@ -28,12 +28,12 @@ func TestOrchestrator_StartExecution_ShouldExecuteTheStepsWithoutRollback(t *tes
 
 	o.AddStep("step 1", step1, nil)
 	o.AddStep("step 2", step2, step2RollBack)
-	err := o.StartExecution()
+	err := o.Run()
 	require.NoError(t, err)
 }
 
 func TestOrchestrator_StartExecution_ShouldExecuteTheStepsWithRollback(t *testing.T) {
-	o := stack.NewOrchestrator()
+	o := orchestrator.NewOrchestrator()
 
 	step1 := func() error {
 		fmt.Println("executing step 1")
@@ -58,13 +58,13 @@ func TestOrchestrator_StartExecution_ShouldExecuteTheStepsWithRollback(t *testin
 	o.AddStep("step 1", step1, nil)
 	o.AddStep("step 2", step2, step2RollBack)
 	o.AddStep("step 3", step3, nil)
-	err := o.StartExecution()
+	err := o.Run()
 	require.Error(t, err)
 	assert.Equal(t, err.Error(), `error executing step "step 3": error in step3`)
 }
 
 func TestOrchestrator_StartExecution_WhenRollbackFails(t *testing.T) {
-	o := stack.NewOrchestrator()
+	o := orchestrator.NewOrchestrator()
 
 	step1 := func() error {
 		fmt.Println("executing step 1")
@@ -93,7 +93,7 @@ func TestOrchestrator_StartExecution_WhenRollbackFails(t *testing.T) {
 	o.AddStep("step 1", step1, step1RollBack)
 	o.AddStep("step 2", step2, step2RollBack)
 	o.AddStep("step 3", step3, nil)
-	err := o.StartExecution()
+	err := o.Run()
 	require.Error(t, err)
 	assert.Equal(t, err.Error(), "error executing step \"step 3\": error in step3\nerror rolling back step \"step 1\": error rollback in step1")
 }
