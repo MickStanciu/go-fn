@@ -35,7 +35,7 @@ func (o *Orchestrator) AddStep(step *Step) {
 	}
 
 	if step.stepFn == nil {
-		panic(errors.New("stepFn cannot be nil"))
+		panic(errors.New("execFn cannot be nil"))
 	}
 
 	o.steps = append(o.steps, step)

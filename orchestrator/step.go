@@ -1,17 +1,10 @@
 package orchestrator
 
-import (
-	"fmt"
-	"time"
-)
-
-type stepFn func() error
-
 // Step - struct that will contain instructions of Step execution and rollback
 type Step struct {
 	name           string
-	stepFn         stepFn
-	rollbackStepFn stepFn
+	stepFn         execFn
+	rollbackStepFn execFn
 	//retryStrategy - nice to have
 	timeOutSeconds int
 }
@@ -26,7 +19,7 @@ func WithTimeout(timeOutSeconds int) BuildStepOption {
 }
 
 // WithRollbackStepFn - adds a rollback function
-func WithRollbackStepFn(fn stepFn) BuildStepOption {
+func WithRollbackStepFn(fn execFn) BuildStepOption {
 	return func(s *Step) {
 		if fn != nil {
 			s.rollbackStepFn = fn
@@ -35,7 +28,7 @@ func WithRollbackStepFn(fn stepFn) BuildStepOption {
 }
 
 // NewStep - builds a new step
-func NewStep(name string, fn stepFn, opts ...BuildStepOption) *Step {
+func NewStep(name string, fn execFn, opts ...BuildStepOption) *Step {
 	s := &Step{
 		name:           name,
 		stepFn:         fn,
@@ -57,7 +50,7 @@ func (s *Step) ExecStep() error {
 	}
 
 	// executing with timeout
-	return executeWithTimeout(s.name, s.stepFn, s.timeOutSeconds)
+	return ExecuteWithTimeout(s.stepFn, s.name, s.timeOutSeconds)
 }
 
 // ExecRollback - executes the rollback step
@@ -71,19 +64,5 @@ func (s *Step) ExecRollback() error {
 	}
 
 	// executing with timeout
-	return executeWithTimeout(s.name, s.rollbackStepFn, s.timeOutSeconds)
-}
-
-func executeWithTimeout(name string, fn stepFn, timeOutSeconds int) error {
-	res := make(chan error, 1)
-	go func() {
-		res <- fn()
-	}()
-
-	select {
-	case <-time.After(time.Duration(timeOutSeconds) * time.Second): //guess need to test this
-		return fmt.Errorf("timeout in step %q after %d seconds", name, timeOutSeconds)
-	case result := <-res:
-		return result
-	}
+	return ExecuteWithTimeout(s.rollbackStepFn, s.name, s.timeOutSeconds)
 }
