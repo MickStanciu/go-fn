@@ -93,6 +93,26 @@ result := fn.TakeAll([]string{"A","B","C","D","E"}, func(s string) bool {
 })
 ```
 
+#### DeDuplicateList
+makes sure the elements in a collection are unique, based on string KEY
+
+```go
+func DeduplicateList[T any](elements []*T, pkFun func(element *T) string) []*T
+```
+
+Example:
+```go
+type human struct {
+    ID   string
+    Name string
+    Age  int
+}
+
+result := fn.DeduplicateList(tt.input, func(element *human) string {
+    return element.ID
+})
+```
+
 ### Maps
 transformation functions
 ```go
