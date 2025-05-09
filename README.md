@@ -13,16 +13,29 @@ statement which can be evaluated to true/false
 type Predicate[T any] func(T) bool
 ```
 
-#### Filter
+#### Filter Slice
 will filter a collection based on the provided predicate
 ```go
-func Filter[T any](input []T, p Predicate[T]) []T
+func FilterSliceBy[T any](input []T, p Predicate[T]) []T
 ```
 
 Example:
 ```go
-evens := fn.Filter([]int{1, 2, 3, 4, 5, 6, 7, 8}, func(i int) bool {
+evens := fn.FilterSliceBy([]int{1, 2, 3, 4, 5, 6, 7, 8}, func(i int) bool {
     return i%2 == 0
+})
+```
+
+#### Filter Map
+will filter a map based on the provided predicate
+```go
+func FilterMapBy[KEY string, U any](input map[KEY]U, p Predicate[U]) map[KEY]U 
+```
+
+Example:
+```go
+greaterThanTen := FilterMapBy(map[string]int{"a": 1, "b": 2, "c": 30}, func(i int) bool {
+    return i > 10
 })
 ```
 
@@ -119,16 +132,30 @@ transformation functions
 type MapFn[A, B any] func(A) B
 ````
 
-#### Map
+#### TransformSliceBy
 applies a transformation function A -> B to each element of type A
 ```go
-func Map[A, B any](input []A, fn MapFn[A, B]) []B
+func TransformSliceBy[A, B any](input []A, fn MapFn[A, B]) []B
 ```
 
 ```go
 fn.Fmap([]string{"George", "Maria", "John"}, func(a string) string {
     return "Hello " + a 
 })
+```
+
+#### TransformMapBy
+applies a transformation function A -> B to each element of type A
+
+```go
+TransformMapBy[A, B any](input map[string]A, fn MapFn[A, B]) map[string]B
+```
+
+Example:
+```go
+makeItDouble := TransformMapBy(map[string]int{"a": 1, "b": 2, "c": 30}, func(i int) int {
+		return i * 2
+	})
 ```
 
 #### FlatMap
