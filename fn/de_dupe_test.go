@@ -1,6 +1,7 @@
 package fn_test
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/MickStanciu/go-fn/fn"
@@ -96,6 +97,10 @@ func TestDeduplicateList(t *testing.T) {
 			},
 			customAssert: func(t *testing.T, output []*human) {
 				assert.Len(t, output, 2)
+				sort.Slice(output, func(i, j int) bool {
+					return output[i].ID < output[j].ID
+				})
+
 				assert.Equal(t, "1", output[0].ID)
 				assert.Equal(t, "John", output[0].Name)
 				assert.Equal(t, 40, output[0].Age)
