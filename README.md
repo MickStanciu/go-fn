@@ -184,6 +184,22 @@ fn.Reduce([]int{1, 2, 3}, func(a, b int) int {
 ```
 result is `7`
 
+#### Reduce And Compute
+will fold a collection into a number
+```go
+type ComputeFn[T, R any] func(T, R) R
+func ReduceAndCompute[T any, R Number](input []T, fn ComputeFn[T, R]) R
+```
+
+Example:
+```go
+type cat struct {
+    weight int
+}
+sumOfAllCats := fn.ReduceAndCompute(test.input, func(a cat, b int) int {
+    return a.weight + b
+})
+```
 
 #### Zip
 will combine 2 collections
