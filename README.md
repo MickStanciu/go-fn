@@ -126,6 +126,14 @@ result := fn.DeduplicateList(tt.input, func(element *human) string {
 })
 ```
 
+#### DeDuplicateOrderedList
+makes sure the elements in a collection are unique, based on string KEY, preserves the original order
+
+```go
+func DeduplicateOrderedList[T any](elements []*T, pkFun func(element *T) string) []*T
+```
+
+
 ### Maps
 transformation functions
 ```go
