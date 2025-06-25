@@ -9,5 +9,5 @@ type MapFn[A, B any] func(A) B
 // FlatMapFn - map function that transforms A -> []B, returns []B
 type FlatMapFn[T any] func(T) []T
 
-// ReduceFn - function that takes an accumulator and an item, returning a new accumulator
-type ReduceFn[A, T any] func(acc A, item T) A
+// ReduceFn - reduce function
+type ReduceFn[T any] func(a, b T) T

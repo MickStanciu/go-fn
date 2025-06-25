@@ -1,7 +1,5 @@
 package fn
 
-type ReduceFn[T any] func(a, b T) T
-
 // Reduce - will fold a collection
 func Reduce[T any](input []T, fn ReduceFn[T]) T {
 	if len(input) == 0 {
