@@ -1,6 +1,7 @@
 package fn
 
 // FlatMap - applies a transformation function from T to []T to each element of type T
+// This implementation optimizes memory allocation by pre-calculating capacity
 func FlatMap[T any](input []T, fn FlatMapFn[T]) []T {
 	if len(input) == 0 {
 		return []T{}
@@ -10,7 +11,8 @@ func FlatMap[T any](input []T, fn FlatMapFn[T]) []T {
 	// First pass: calculate total size
 	totalSize := 0
 	for _, element := range input {
-		totalSize += len(fn(element))
+		result := fn(element)
+		totalSize += len(result)
 	}
 
 	// Second pass: populate the pre-allocated slice
