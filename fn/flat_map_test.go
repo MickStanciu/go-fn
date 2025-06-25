@@ -14,7 +14,7 @@ func TestFlatMap(t *testing.T) {
 	}{
 		"when empty": {
 			input:          []int{},
-			expectedOutput: nil,
+			expectedOutput: []int{},
 		},
 		"when not empty": {
 			input:          []int{1, 2, 3},
