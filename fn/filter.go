@@ -8,7 +8,13 @@ func Filter[T any](input []T, p Predicate[T]) []T {
 }
 
 func FilterSliceBy[T any](input []T, p Predicate[T]) []T {
-	var out = make([]T, 0)
+	if len(input) == 0 {
+		return []T{}
+	}
+
+	// Pre-allocate with a reasonable initial capacity
+	// In worst case (all elements match), we need len(input)
+	out := make([]T, 0, len(input))
 
 	for _, element := range input {
 		if p(element) {
@@ -22,7 +28,13 @@ func FilterSliceBy[T any](input []T, p Predicate[T]) []T {
 // FilterMapBy - filters a map[KEY]T, using a predicate function
 // Returns an empty map if no match, or the filtered collection
 func FilterMapBy[KEY string, U any](input map[KEY]U, p Predicate[U]) map[KEY]U {
-	var out = make(map[KEY]U)
+	if len(input) == 0 {
+		return map[KEY]U{}
+	}
+
+	// Pre-allocate with a reasonable initial capacity
+	// In worst case (all elements match), we need len(input)
+	out := make(map[KEY]U, len(input))
 
 	for key, element := range input {
 		if p(element) {
