@@ -8,3 +8,6 @@ type MapFn[A, B any] func(A) B
 
 // FlatMapFn - map function that transforms A -> []B, returns []B
 type FlatMapFn[T any] func(T) []T
+
+// ReduceFn - reduce function
+type ReduceFn[T any] func(a, b T) T
