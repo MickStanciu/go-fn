@@ -15,11 +15,11 @@ func TestTakeAll(t *testing.T) {
 	}{
 		"when empty": {
 			input:          []string{},
-			expectedOutput: nil,
+			expectedOutput: []string{},
 		},
 		"when no match": {
 			input:          []string{"A", "B", "C"},
-			expectedOutput: nil,
+			expectedOutput: []string{},
 		},
 		"when match": {
 			input:          []string{"A", "B", "C", "D", "DEF"},
