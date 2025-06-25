@@ -18,7 +18,12 @@ func TransformSliceBy[A, B any](input []A, fn MapFn[A, B]) []B {
 
 // TransformMapBy - applies a transformation function A -> B to each element of type A
 func TransformMapBy[A, B any](input map[string]A, fn MapFn[A, B]) map[string]B {
-	var out = make(map[string]B)
+	if len(input) == 0 {
+		return map[string]B{}
+	}
+
+	// Pre-allocate with the exact size needed
+	out := make(map[string]B, len(input))
 
 	for key, element := range input {
 		out[key] = fn(element)
