@@ -67,3 +67,25 @@ func TestTransformMapBy(t *testing.T) {
 		})
 	}
 }
+
+func TestConvertMapToSliceBy(t *testing.T) {
+	tests := map[string]struct {
+		input          map[string]int
+		expectedOutput []int
+	}{
+		"when empty": {
+			input:          map[string]int{},
+			expectedOutput: []int{},
+		},
+		"when no empty": {
+			input:          map[string]int{"a": 1, "b": 2, "c": 3},
+			expectedOutput: []int{1, 2, 3},
+		},
+	}
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			result := fn.ConvertMapToSliceBy(test.input)
+			assert.ElementsMatch(t, test.expectedOutput, result)
+		})
+	}
+}

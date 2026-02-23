@@ -166,6 +166,12 @@ makeItDouble := TransformMapBy(map[string]int{"a": 1, "b": 2, "c": 30}, func(i i
 	})
 ```
 
+#### ConvertMapToSliceBy
+applies a transformation function A -> B to each element of type A, returning a slice of B
+```go
+func ConvertMapToSliceBy[A, B any](input map[string]A, fn MapFn[A, B]) []B
+```
+
 #### FlatMap
 applies a transformation function from T to []T to each element of type T
 ```go
