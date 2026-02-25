@@ -166,11 +166,46 @@ makeItDouble := TransformMapBy(map[string]int{"a": 1, "b": 2, "c": 30}, func(i i
 	})
 ```
 
-#### ConvertMapToSliceBy
-applies a transformation function A -> B to each element of type A, returning a slice of B
+#### ConvertMapToSlice
+converts a map[K]R to a slice of R values
 ```go
-func ConvertMapToSliceBy[A, B any](input map[string]A, fn MapFn[A, B]) []B
+func ConvertMapToSlice[K string, R any](input map[K]R) []R
 ```
+Example:
+```go
+m := map[string]int{"a": 1, "b": 2, "c": 3}
+values := fn.ConvertMapToSlice(m)
+// values = []int{1, 2, 3}
+```
+
+#### ConvertMapToSliceBy
+converts a map[K]A to a slice of B values using a transformation function
+```go
+func ConvertMapToSliceBy[K string, A, B any](input map[K]A, fn func(K, A) B) []B
+```
+Example:
+```go
+m := map[string]int{"a": 1, "b": 2, "c": 3}
+values := fn.ConvertMapToSliceBy(m, func(k string, v int) string {
+    return fmt.Sprintf("%s=%d", k, v)
+})
+// values = []string{"a=1", "b=2", "c=3"}
+```
+
+#### ConvertSliceToMapBy
+converts a slice of A to a map[K]B using a transformation function
+```go
+func ConvertSliceToMapBy[K string, A, B any](input []A, fn func(A) (K, B)) map[K]B
+```
+Example:
+```go
+names := []string{"George", "Maria", "John"}
+nameMap := fn.ConvertSliceToMapBy(names, func(name string) (string, int) {
+    return name, len(name)
+})
+// nameMap = map[string]int{"George": 6, "Maria": 5, "John": 4}
+```
+
 
 #### FlatMap
 applies a transformation function from T to []T to each element of type T
