@@ -38,13 +38,36 @@ func TransformMapBy[A, B any](input map[string]A, fn MapFn[A, B]) map[string]B {
 	return out
 }
 
-// ConvertMapToSliceBy - converts a map[K]R to a slice of R values
-func ConvertMapToSliceBy[K string, R any](input map[K]R) []R {
+// ConvertMapToSlice - converts a map[K]R to a slice of R values
+func ConvertMapToSlice[K string, R any](input map[K]R) []R {
 	result := make([]R, len(input))
 	idx := 0
 	for _, val := range input {
 		result[idx] = val
 		idx++
+	}
+
+	return result
+}
+
+// ConvertMapToSliceBy - converts a map[K]A to a slice of B values using a transformation function
+func ConvertMapToSliceBy[K string, A, B any](input map[K]A, fn func(K, A) B) []B {
+	result := make([]B, len(input))
+	idx := 0
+	for key, val := range input {
+		result[idx] = fn(key, val)
+		idx++
+	}
+
+	return result
+}
+
+// ConvertSliceToMapBy - converts a map[K]A to a slice of B values using a transformation function
+func ConvertSliceToMapBy[K string, A, B any](input []A, fn func(A) (K, B)) map[K]B {
+	result := make(map[K]B, len(input))
+	for _, val := range input {
+		key, mappedVal := fn(val)
+		result[key] = mappedVal
 	}
 
 	return result
